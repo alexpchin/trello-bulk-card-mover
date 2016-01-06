@@ -65,7 +65,7 @@ T.moveCards = function(id, dayDifference){
           Trello.put("/cards/"+card.id+"/due", { value: newDate }).done(function(data) {
             console.log("Card updated");
           });
-        }, 500);
+        }, 1000);
       }
     });
   });
