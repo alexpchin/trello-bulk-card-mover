@@ -35,6 +35,8 @@ T.getBoards = function(){
     return data.forEach(function(board) {
       $(".boards").prepend("<option value='"+ board.id +"'>"+ board.name +"</option>");
     });
+  }).fail(function(data) {
+    return console.log(data);
   });
 };
 
@@ -53,6 +55,8 @@ T.duplicateBoard = function(){
   }).done(function(data){
     $(".message").text("Board data recieved.");
     return T.moveCards(data.id, dayDifference);
+  }).fail(function(data){
+    return console.log(data);
   });
 };
 
@@ -74,10 +78,11 @@ T.moveCards = function(id, dayDifference){
           Trello.put("/cards/"+card.id+"/due", { value: newDate }).done(function(data) {
             $(".message").text(numberOfCards + " cards remaining");
             if (numberOfCards === 0) return $(".message").text("Complete!");
+          }).fail(function(data){
+            return console.log(data);
           });
         }
       }, 100*index);
-
     });
   });
 };
