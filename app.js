@@ -5,11 +5,7 @@ var ejsLayouts    = require('express-ejs-layouts');
 var bodyParser    = require('body-parser');
 var express       = require("express");
 var app           = express();
-var port          = 3000;
-var token;
-var tokenSecret;
-var verifier;
-
+var port          = process.env.PORT || 3000;
 var key           = process.env.TRELLO_KEY;
 var secret        = process.env.TRELLO_SECRET;
 
