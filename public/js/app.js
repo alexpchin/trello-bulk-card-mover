@@ -46,27 +46,38 @@ T.duplicateBoard = function(){
   var newStartDate   = $("#new-start-date").val();
   var dayDifference  = T.dayDifference(oldStartDate, newStartDate);
 
+  $(".message").text("Duplicating board...");
   return Trello.post("/boards", {
     name: name,
     idBoardSource: idBoardSource
   }).done(function(data){
+    $(".message").text("Board data recieved.");
     return T.moveCards(data.id, dayDifference);
   });
 };
 
 T.moveCards = function(id, dayDifference){
-  Trello.get("/boards/"+id+"/cards").done(function(data) {
-    data.forEach(function(card) {
-      if (card.due) {
-        var newDate = T.createNewDate(card.due, dayDifference);
+  $(".message").text("Fetching cards.");
 
-        // Delay for rate limiting
-        setTimeout(function(){
+  Trello.get("/boards/"+id+"/cards").done(function(data) {
+    var numberOfCards = data.length;
+    $(".message").text(numberOfCards + " cards found");
+
+    data.forEach(function(card, index) {
+      // Delay for rate limiting, 100 calls per 10 seconds
+      // - http://help.trello.com/article/838-api-rate-limits
+      setTimeout(function(){
+        numberOfCards--;
+
+        if (card.due) {
+          var newDate = T.createNewDate(card.due, dayDifference);
           Trello.put("/cards/"+card.id+"/due", { value: newDate }).done(function(data) {
-            console.log("Card updated");
+            $(".message").text(numberOfCards + " cards remaining");
+            if (numberOfCards === 0) return $(".message").text("Complete!");
           });
-        }, 1000);
-      }
+        }
+      }, 100*index);
+
     });
   });
 };
