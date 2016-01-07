@@ -9,6 +9,10 @@ h1, h2 {
   margin: 2rem 0;
 }
 
+a {
+  color: #0079BF;
+}
+
 input, label, textarea, select {
   display: block;
   margin: 10px auto;
@@ -37,4 +41,11 @@ input[type="submit"] {
 .logged-in,
 .logged-out {
   display: none;
+}
+
+footer {
+  border-top: 1px solid silver;
+  opacity: 0.24;
+  max-width: 320px;
+  margin: 6rem auto 3rem;
 }
