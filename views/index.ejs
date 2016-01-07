@@ -1,14 +1,21 @@
 <h1>Trello Bulk Card Mover</h1>
-<form class="duplicate">
-  <label for="name">Choose a name for your new board</label>
-  <input type="text" name="name" id="name" autofocus required>
-  <label for="idBoardSource">Select board to duplicate</label>
-  <select class="boards" name="idBoardSource" id="idBoardSource" required>
-  </select>
-  <label for="old-start-date">Old course start date</label>
-  <input type="date" name="old-start-date" id="old-start-date" required>
-  <label for="new-start-date">New course start date</label>
-  <input type="date" name="new-start-date" id="new-start-date" required>
-  <input type="submit" value="Duplicate">
-</form>
-<h2 class="message"></h2>
+<section class="logged-out">
+  <form class="login">
+    <input type="submit" value="Login">
+  </form>
+</section>
+<section class="logged-in">
+  <form class="duplicate">
+    <label for="name">Choose a name for your new board</label>
+    <input type="text" name="name" id="name" autofocus required>
+    <label for="idBoardSource">Select board to duplicate</label>
+    <select class="boards" name="idBoardSource" id="idBoardSource" required>
+    </select>
+    <label for="old-start-date">Old course start date</label>
+    <input type="date" name="old-start-date" id="old-start-date" required>
+    <label for="new-start-date">New course start date</label>
+    <input type="date" name="new-start-date" id="new-start-date" required>
+    <input type="submit" value="Duplicate">
+  </form>
+  <h2 class="message"></h2>
+</section>

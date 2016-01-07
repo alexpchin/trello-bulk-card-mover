@@ -33,3 +33,8 @@ input[type="submit"] {
   color: white;
   border: 1px solid #026AA7;
 }
+
+.logged-in,
+.logged-out {
+  display: none;
+}

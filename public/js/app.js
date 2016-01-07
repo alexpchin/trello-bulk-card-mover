@@ -1,12 +1,31 @@
-$(function(){
-  T.init();
-  $(".duplicate").on("submit", T.duplicateBoard);
-});
-
 var T = T || {};
 
+$(function(){
+  T.init();
+});
+
 T.init = function(){
-  Trello.authorize({
+  T.loggedInStatus();
+  $(".duplicate").on("submit", T.duplicateBoard);
+  $(".login").on("submit", T.authorize);
+};
+
+T.loggedInStatus = function(){
+  var token      = Trello.token();
+  var $loggedIn  = $(".logged-in");
+  var $loggedOut = $(".logged-out");
+  if (token) {
+    $loggedOut.hide();
+    $loggedIn.fadeIn();
+  } else {
+    $loggedIn.hide();
+    $loggedOut.fadeIn();
+  }
+};
+
+T.authorize = function(){
+  event.preventDefault();
+  return Trello.authorize({
     interactive: true,
     type: "popup",
     name: "bulk-card-mover",
@@ -22,7 +41,7 @@ T.init = function(){
 };
 
 T.onAuthorizeSuccessful = function() {
-  var token = Trello.token();
+  T.loggedInStatus();
   return T.getBoards();
 };
 
