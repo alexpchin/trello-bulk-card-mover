@@ -65,7 +65,9 @@ T.duplicateBoard = function(){
   var idBoardSource  = $("#idBoardSource").val();
   var oldStartDate   = $("#old-start-date").val();
   var newStartDate   = $("#new-start-date").val();
-  var dayDifference  = T.dayDifference(oldStartDate, newStartDate);
+  var direction      = $("#direction").val();
+  var dayDifference  = T.dayDifference(oldStartDate, newStartDate, direction);
+  debugger;
 
   $(".message").text("Duplicating board...");
   return Trello.post("/boards", {
@@ -106,14 +108,15 @@ T.moveCards = function(id, dayDifference){
   });
 };
 
-T.dayDifference = function(oldStartDate, newStartDate){
+T.dayDifference = function(oldStartDate, newStartDate, direction){
   // Number of milliseconds in a day
   var oneDay = 24*60*60*1000;
 
   // Calculate the number of days between course start dates
   var date1  = new Date(oldStartDate);
   var date2  = new Date(newStartDate);
-  return Math.round(Math.abs((date1.getTime() - date2.getTime())/(oneDay)));
+  var difference = Math.round(Math.abs((date1.getTime() - date2.getTime())/(oneDay)));
+  return direction === "+" ? difference: -difference;
 };
 
 T.createNewDate = function(dueOriginally, dayDifference) {
