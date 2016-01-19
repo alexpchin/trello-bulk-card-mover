@@ -46,7 +46,7 @@ T.onAuthorizeSuccessful = function() {
 };
 
 T.onFailedAuthorization = function() {
-  return console.log("Authorization failed.");
+  return console.error("Authorization failed.");
 };
 
 T.getBoards = function(){
@@ -55,7 +55,7 @@ T.getBoards = function(){
       $(".boards").prepend("<option value='"+ board.id +"'>"+ board.name +"</option>");
     });
   }).fail(function(data) {
-    return console.log(data);
+    return console.error(data);
   });
 };
 
@@ -67,7 +67,6 @@ T.duplicateBoard = function(){
   var newStartDate   = $("#new-start-date").val();
   var direction      = $("#direction").val();
   var dayDifference  = T.dayDifference(oldStartDate, newStartDate, direction);
-  debugger;
 
   $(".message").text("Duplicating board...");
   return Trello.post("/boards", {
@@ -77,7 +76,7 @@ T.duplicateBoard = function(){
     $(".message").text("Board data recieved.");
     return T.moveCards(data.id, dayDifference);
   }).fail(function(data){
-    return console.log(data);
+    return console.error(data);
   });
 };
 
@@ -100,7 +99,7 @@ T.moveCards = function(id, dayDifference){
             $(".message").text(numberOfCards + " cards remaining");
             if (numberOfCards === 0) return $(".message").text("Complete!");
           }).fail(function(data){
-            return console.log(data);
+            return console.error(data);
           });
         }
       }, 100*index);
