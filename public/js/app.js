@@ -6,8 +6,18 @@ $(function(){
 
 T.init = function(){
   T.loggedInStatus();
+  $('input[name="name"], label[for="name"]').hide();
+  $('input:radio[name="new"]').change(T.newBoard);
   $(".duplicate").on("submit", T.duplicateBoard);
   $(".login").on("submit", T.authorize);
+};
+
+T.newBoard = function(){
+  if (this.checked && this.value == 'yes') {
+    return $('input[name="name"]').show();
+  } else {
+    return $('input[name="name"]').hide();
+  }
 };
 
 T.loggedInStatus = function(){
@@ -66,18 +76,30 @@ T.duplicateBoard = function(){
   var oldStartDate   = $("#old-start-date").val();
   var newStartDate   = $("#new-start-date").val();
   var direction      = $("#direction").val();
+  var newBoard       = $("input[name='new']:checked").val();
   var dayDifference  = T.dayDifference(oldStartDate, newStartDate, direction);
 
-  $(".message").text("Duplicating board...");
-  return Trello.post("/boards", {
-    name: name,
-    idBoardSource: idBoardSource
-  }).done(function(data){
-    $(".message").text("Board data recieved.");
-    return T.moveCards(data.id, dayDifference);
-  }).fail(function(data){
-    return console.error(data);
-  });
+  if (newBoard === 'yes') {
+    $(".message").text("Duplicating board...");
+    return Trello.post("/boards", {
+      name: name,
+      idBoardSource: idBoardSource
+    }).done(function(data){
+      $(".message").text("Board data recieved.");
+      return T.moveCards(data.id, dayDifference);
+    }).fail(function(data){
+      return console.error(data);
+    });
+  } else {
+    $(".message").text("Fetching board...");
+    return Trello.get('/boards/' + idBoardSource)
+    .done(function(data) {
+      $(".message").text("Board data recieved.");
+      return T.moveCards(data.id, dayDifference);
+    }).fail(function(data){
+      return console.error(data);
+    });
+  }
 };
 
 T.moveCards = function(id, dayDifference){

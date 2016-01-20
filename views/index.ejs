@@ -5,10 +5,13 @@
   </form>
 </section>
 <section class="logged-in">
-  <form class="duplicate">
+  <form class="duplicate" name="board">
+    <label name="new">Do you want to create a new board?</label>
+    <input type="radio" name="new" value="no" checked=true><span>No</span>
+    <input type="radio" name="new" value="yes"><span>Yes</span>
     <label for="name">Choose a name for your new board</label>
-    <input type="text" name="name" id="name" autofocus required>
-    <label for="idBoardSource">Select board to duplicate</label>
+    <input type="text" name="name" id="name">
+    <label for="idBoardSource">Select board to shift/duplicate</label>
     <select class="boards" name="idBoardSource" id="idBoardSource" required>
     </select>
     <label for="old-start-date">Old course start date</label>
@@ -19,7 +22,7 @@
       <option value="+">Forward</option>
       <option value="-">Backward</option>
     </select>
-    <input type="submit" value="Duplicate">
+    <input type="submit" value="Shift/Duplicate">
   </form>
   <h2 class="message"></h2>
 </section>

@@ -38,6 +38,11 @@ input[type="submit"] {
   border: 1px solid #026AA7;
 }
 
+input[type="radio"] {
+  display: inline-block;
+  margin: 0 10px;
+}
+
 .logged-in,
 .logged-out {
   display: none;
